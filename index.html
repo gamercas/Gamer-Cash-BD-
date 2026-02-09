@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamerCash BD | Professional Global Earning Master</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            background: radial-gradient(circle at top left, #0f172a, #1e293b, #000);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+        }
+        .neon-text {
+            text-shadow: 0 0 10px #3b82f6, 0 0 20px #3b82f6;
+        }
+        .nav-button {
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+        }
+        .nav-active {
+            color: #3b82f6;
+            transform: translateY(-5px);
+            text-shadow: 0 0 5px #3b82f6;
+        }
+        /* Page Transition Animations */
+        .page-enter-active, .page-leave-active {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .page-enter-from, .page-leave-to {
+            opacity: 0;
+        }
+        .page-leave-active {
+            position: absolute;
+            width: 100%;
+        }
+        .task-item.locked {
+            filter: grayscale(80%);
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body class="pb-24">
+
+    <header class="p-5 flex justify-between items-center z-10">
+        <div>
+            <h1 class="text-3xl font-extrabold neon-text">GamerCash BD</h1>
+            <p class="text-xs text-gray-400">ID: gamer-cash-bd-4bc97</p>
+        </div>
+        <div class="glass px-4 py-2 flex items-center gap-2 text-lg">
+            <i class="fas fa-coins text-yellow-400"></i>
+            <span id="current-balance" class="font-bold">1,250</span>
+        </div>
+    </header>
+
+    <main id="app-content" class="flex-grow p-5 space-y-6 relative overflow-hidden">
+        </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 glass m-4 p-3 flex justify-around items-center border-t-0 z-20">
+        <button id="nav-home" onclick="navigateTo('home')" class="nav-button flex flex-col items-center text-gray-400 nav-active">
+            <i class="fas fa-home text-xl"></i>
+            <span class="text-[10px] mt-1">Home</span>
+        </button>
+        <button id="nav-tasks" onclick="navigateTo('tasks')" class="nav-button flex flex-col items-center text-gray-400">
+            <i class="fas fa-tasks text-xl"></i>
+            <span class="text-[10px] mt-1">Tasks</span>
+        </button>
+        <button id="nav-leaderboard" onclick="navigateTo('leaderboard')" class="nav-button flex flex-col items-center text-gray-400">
+            <i class="fas fa-trophy text-xl"></i>
+            <span class="text-[10px] mt-1">Leaderboard</span>
+        </button>
+        <button id="nav-wallet" onclick="navigateTo('wallet')" class="nav-button flex flex-col items-center text-gray-400">
+            <i class="fas fa-wallet text-xl"></i>
+            <span class="text-[10px] mt-1">Wallet</span>
+        </button>
+        <button id="nav-profile" onclick="navigateTo('profile')" class="nav-button flex flex-col items-center text-gray-400">
+            <i class="fas fa-user text-xl"></i>
+            <span class="text-[10px] mt-1">Profile</span>
+        </button>
+    </nav>
+
+    <script>
+        const appContent = document.getElementById('app-content');
+        const navButtons = document.querySelectorAll('.nav-button');
+        let currentBalance = 1250; // Initial dummy balance
+
+        // Function to update balance display
+        function updateBalanceDisplay() {
+            document.getElementById('current-balance').textContent = currentBalance.toLocaleString();
+        }
+
+        // --- Page Content Definitions ---
+        const pages = {
+            home: `
+                <section class="glass p-5 grid grid-cols-2 gap-4 text-center">
+                    <div>
+                        <p class="text-gray-400 text-sm">Daily Tasks Completed</p>
+                        <p class="text-2xl font-bold neon-text">45/200</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Total Referrals</p>
+                        <p class="text-2xl font-bold neon-text">12</p>
+                    </div>
+                </section>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button onclick="navigateTo('tasks', 'startio')" class="glass p-6 flex flex-col items-center justify-center hover:scale-105 transition duration-300">
+                        <i class="fas fa-ad text-4xl text-blue-400 mb-3"></i>
+                        <span class="text-lg font-semibold">Start.io Tasks</span>
+                        <span class="text-sm text-gray-400">(200 daily)</span>
+                    </button>
+                    <button onclick="navigateTo('tasks', 'admob')" class="glass p-6 flex flex-col items-center justify-center hover:scale-105 transition duration-300">
+                        <i class="fas fa-mobile-alt text-4xl text-green-400 mb-3"></i>
+                        <span class="text-lg font-semibold">AdMob Tasks</span>
+                        <span class="text-sm text-gray-400">(80 daily)</span>
+                    </button>
+                    <button onclick="navigateTo('spin')" class="glass p-6 flex flex-col items-center justify-center hover:scale-105 transition duration-300 col-span-2">
+                        <i class="fas fa-spinner text-4xl text-purple-400 mb-3 animate-spin-slow"></i>
+                        <span class="text-lg font-semibold">Friday Night Mega Event!</span>
+                        <span id="countdown-timer" class="text-sm text-gray-400 mt-1"></span>
+                    </button>
+                </div>
+                
+                <section class="glass p-5 flex justify-between items-center bg-gradient-to-r from-blue-900/20 to-transparent">
+                    <div>
+                        <h3 class="font-bold text-lg">Ready to Cashout?</h3>
+                        <p class="text-xs text-gray-400">Minimum 500 Tokens needed</p>
+                    </div>
+                    <button onclick="navigateTo('wallet')" class="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg font-bold transition">Withdraw Now</button>
+                </section>
+            `,
+            tasks: `
+                <div class="glass p-6 space-y-5">
+                    <h2 class="text-2xl font-bold neon-text mb-4">Daily Earning Tasks</h2>
+                    
+                    <div class="space-y-3">
+                        <h3 class="text-xl font-semibold text-blue-300 flex items-center gap-2">
+                            <i class="fas fa-ad"></i> Start.io Tasks <span class="text-sm text-gray-400">(200 Tasks, 4 Tokens each)</span>
+                        </h3>
+                        <div id="startio-tasks" class="grid grid-cols-4 gap-2">
+                            </div>
+                        <button id="startio-cooldown-button" class="w-full bg-gray-700 text-gray-400 py-3 rounded-lg font-semibold mt-4 hidden" disabled>
+                            Cooldown: <span id="startio-cooldown-timer">60s</span>
+                        </button>
+                    </div>
+
+                    <hr class="border-gray-700">
+
+                    <div class="space-y-3">
+                        <h3 class="text-xl font-semibold text-green-300 flex items-center gap-2">
+                            <i class="fas fa-mobile-alt"></i> Google AdMob Tasks <span class="text-sm text-gray-400">(80 Tasks, 4 Tokens each)</span>
+                        </h3>
+                        <div id="admob-tasks" class="grid grid-cols-4 gap-2">
+                            </div>
+                        <button id="admob-cooldown-button" class="w-full bg-gray-700 text-gray-400 py-3 rounded-lg font-semibold mt-4 hidden" disabled>
+                            Cooldown: <span id="admob-cooldown-timer">60s</span>
+                        </button>
+                    </div>
+                </div>
+            `,
+            spin: `
+                <div class="glass p-6 text-center space-y-5">
+                    <h2 class="text-3xl font-bold neon-text">Friday Night Mega Spin!</h2>
+                    <p class="text-md text-gray-300">Test your luck for a chance to win big tokens!</p>
+                    <div class="relative w-64 h-64 mx-auto my-8">
+                        <img src="https://via.placeholder.com/256/0f172a/3b82f6?text=SPIN+WHEEL" alt="Spin Wheel" class="w-full h-full rounded-full border-4 border-blue-500 shadow-lg animate-pulse-slow">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-star text-white text-5xl opacity-80"></i>
+                        </div>
+                    </div>
+                    <p id="spin-countdown-display" class="text-xl font-semibold text-yellow-400"></p>
+                    <button id="spin-button" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg transition duration-300 transform hover:scale-105" disabled>
+                        Spin Now!
+                    </button>
+                    <p class="text-sm text-gray-400 mt-4">Event starts every Friday at 10 PM. Check back soon!</p>
+                </div>
+            `,
+            wallet: `
+                <div class="glass p-6 space-y-6">
+                    <h2 class="text-2xl font-bold neon-text">Withdraw Your Earnings</h2>
+                    <p class="text-gray-400 text-sm">Minimum withdrawal: 500 Tokens</p>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <label class="glass p-4 flex flex-col items-center cursor-pointer transition-all duration-200 hover:border-blue-500">
+                            <input type="radio" name="withdrawal-method" value="bkash" class="hidden" onchange="updateWithdrawalInput('bkash')">
+                            <img src="https://cdn.example.com/bkash_icon.png" alt="bKash" class="w-10 h-10 mb-2">
+                            <span>bKash</span>
+                        </label>
+                        <label class="glass p-4 flex flex-col items-center cursor-pointer transition-all duration-200 hover:border-blue-500">
+                            <input type="radio" name="withdrawal-method" value="nagad" class="hidden" onchange="updateWithdrawalInput('nagad')">
+                            <img src="https://cdn.example.com/nagad_icon.png" alt="Nagad" class="w-10 h-10 mb-2">
+                            <span>Nagad</span>
+                        </label>
+                        <label class="glass p-4 flex flex-col items-center cursor-pointer transition-all duration-200 hover:border-blue-500">
+                            <input type="radio" name="withdrawal-method" value="binance" class="hidden" onchange="updateWithdrawalInput('binance')">
+                            <img src="https://cdn.example.com/binance_icon.png" alt="Binance" class="w-10 h-10 mb-2">
+                            <span>Binance (USDT)</span>
+                        </label>
+                        <label class="glass p-4 flex flex-col items-center cursor-pointer transition-all duration-200 hover:border-blue-500">
+                            <input type="radio" name="withdrawal-method" value="freefire" class="hidden" onchange="updateWithdrawalInput('freefire')">
+                            <img src="https://cdn.example.com/freefire_icon.png" alt="Free Fire" class="w-10 h-10 mb-2">
+                            <span>Free Fire UID</span>
+                        </label>
+                        <label class="glass p-4 flex flex-col items-center cursor-pointer transition-all duration-200 hover:border-blue-500">
+                            <input type="radio" name="withdrawal-method" value="recharge" class="hidden" onchange="updateWithdrawalInput('recharge')">
+                            <i class="fas fa-mobile-alt text-4xl text-blue-400 mb-2"></i>
+                            <span>Mobile Recharge</span>
+                        </label>
+                    </div>
+
+                    <div id="withdrawal-input-area" class="space-y-4 hidden">
+                        <input type="number" id="withdrawal-amount" placeholder="Enter Tokens to Withdraw (Min 500)" class="w-full bg-black/40 border border-gray-700 p-3 rounded-lg outline-none focus:border-blue-500">
+                        <input type="text" id="account-info" placeholder="" class="w-full bg-black/40 border border-gray-700 p-3 rounded-lg outline-none focus:border-blue-500">
+                        <button onclick="submitWithdrawal()" class="w-full bg-blue-600 hover:bg-blue-700 p-3 rounded-lg font-bold transition">Submit Withdrawal Request</button>
+                    </div>
+
+                    <hr class="border-gray-700">
+
+                    <h3 class="text-xl font-bold neon-text">Transaction History</h3>
+                    <div id="transaction-history" class="space-y-3 text-sm">
+                        <div class="glass p-3 flex justify-between items-center">
+                            <span>bKash (017xxxxxx) - 500 Tokens</span>
+                            <span class="text-yellow-400">Pending</span>
+                        </div>
+                        <div class="glass p-3 flex justify-between items-center">
+                            <span>Free Fire (123456789) - 1000 Tokens</span>
+                            <span class="text-green-400">Confirmed</span>
+                        </div>
+                        <p class="text-gray-500 text-center">No more history available.</p>
+                    </div>
+                </div>
+            `,
+            profile: `
+                <div class="glass p-6 space-y-6">
+                    <h2 class="text-2xl font-bold neon-text">My Profile</h2>
+                    <div class="flex items-center space-x-4">
+                        <img src="https://via.placeholder.com/80/3b82f6/FFFFFF?text=P" alt="Profile Picture" class="w-20 h-20 rounded-full border-2 border-blue-500">
+                        <div>
+                            <p class="text-xl font-semibold">User Name</p>
+                            <p class="text-gray-400 text-sm">user@example.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <p class="flex justify-between items-center">
+                            <span class="text-gray-400">Total Earned:</span>
+                            <span class="font-semibold text-yellow-300">2,500 Tokens</span>
+                        </p>
+                        <p class="flex justify-between items-center">
+                            <span class="text-gray-400">Account Created:</span>
+                            <span class="font-semibold">Jan 1, 2023</span>
+                        </p>
+                        <button onclick="navigateTo('referral')" class="w-full bg-green-600 hover:bg-green-700 p-3 rounded-lg font-bold mt-4 transition">
+                            <i class="fas fa-share-alt mr-2"></i> Invite Friends
+                        </button>
+                    </div>
+
+                    <hr class="border-gray-700">
+
+                    <button class="w-full bg-red-600 hover:bg-red-700 p-3 rounded-lg font-bold transition">Logout</button>
+                </div>
+            `,
+            leaderboard: `
+                <div class="glass p-6 space-y-5">
+                    <h2 class="text-2xl font-bold neon-text text-center">Top Earners Leaderboard</h2>
+                    <p class="text-gray-400 text-center text-sm">See who's dominating the ranks!</p>
+
+                    <div class="bg-blue-900/20 rounded-lg p-3 flex items-center mb-4">
+                        <span class="text-yellow-400 font-bold text-lg mr-3">#1</span>
+                        <img src="https://via.placeholder.com/40/3b82f6/FFFFFF?text=U1" alt="User 1" class="w-10 h-10 rounded-full mr-3">
+                        <div class="flex-grow">
+                            <p class="font-semibold">ProGamerX</p>
+                            <p class="text-gray-400 text-xs">Total: 15,300 Tokens</p>
+                        </div>
+                        <i class="fas fa-trophy text-yellow-500 text-2xl"></i>
+                    </div>
+
+                    <div class="bg-gray-800/20 rounded-lg p-3 flex items-center">
+                        <span class="text-gray-300 font-bold text-lg mr-3">#2</span>
+                        <img src="https://via.placeholder.com/40/808080/FFFFFF?text=U2" alt="User 2" class="w-10 h-10 rounded-full mr-3">
+                        <div class="flex-grow">
+                            <p class="font-semibold">TokenMaster</p>
+                            <p class="text-gray-400 text-xs">Total: 12,870 Tokens</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800/20 rounded-lg p-3 flex items-center">
+                        <span class="text-gray-400 font-bold text-lg mr-3">#3</span>
+                        <img src="https://via.placeholder.com/40/666666/FFFFFF?text=U3" alt="User 3" class="w-10 h-10 rounded-full mr-3">
+                        <div class="flex-grow">
+                            <p class="font-semibold">CashHunter</p>
+                            <p class="text-gray-400 text-xs">Total: 9,990 Tokens</p>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-500 text-center text-sm mt-5">Your Rank: #125 (3,400 Tokens)</p>
+                </div>
+            `,
+            referral: `
+                <div class="glass p-6 space-y-6">
+                    <h2 class="text-2xl font-bold neon-text">Invite Friends & Earn!</h2>
+                    <p class="text-gray-300 text-center">Share your unique link and earn bonus tokens for every friend who joins.</p>
+
+                    <div class="text-center bg-blue-900/20 p-4 rounded-lg">
+                        <p class="text-lg font-semibold mb-2">Your Referral Link:</p>
+                        <div class="flex items-center justify-between glass p-3 rounded-lg">
+                            <span id="referral-link" class="text-blue-300 break-all">https://gamercashbd.com/ref/YOUR_ID_123</span>
+                            <button onclick="copyReferralLink()" class="ml-3 p-2 bg-blue-600 rounded-md hover:bg-blue-700 transition">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-2">Earn 50 tokens for each referral!</p>
+                    </div>
+
+                    <hr class="border-gray-700">
+
+                    <h3 class="text-xl font-bold neon-text">Your Referred Users (<span id="referred-count">3</span>)</h3>
+                    <div id="referred-users-list" class="space-y-3 text-sm">
+                        <div class="glass p-3 flex justify-between items-center">
+                            <span>UserA*** (Joined: Today)</span>
+                            <span class="text-green-400">+50 Tokens</span>
+                        </div>
+                        <div class="glass p-3 flex justify-between items-center">
+                            <span>UserB*** (Joined: Yesterday)</span>
+                            <span class="text-green-400">+50 Tokens</span>
+                        </div>
+                        <div class="glass p-3 flex justify-between items-center">
+                            <span>UserC*** (Joined: 3 days ago)</span>
+                            <span class="text-green-400">+50 Tokens</span>
+                        </div>
+                    </div>
+                </div>
+            `
+        };
+
+        // --- Core Navigation Function ---
+        function navigateTo(page, subPage = null) {
+            // Remove active class from all nav buttons
+            navButtons.forEach(button => button.classList.remove('nav-active', 'text-white'));
+            navButtons.forEach(button => button.classList.add('text-gray-400'));
+
+            // Add active class to the current nav button
+            const activeNavButton = document.getElementById(`nav-${page}`);
+            if (activeNavButton) {
+                activeNavButton.classList.add('nav-active', 'text-white');
+                activeNavButton.classList.remove('text-gray-400');
+            }
+
+            // Animate page transition
+            appContent.classList.add('page-leave-active');
+            appContent.classList.add('page-leave-to');
+
+            setTimeout(() => {
+                appContent.innerHTML = pages[page];
+                appContent.classList.remove('page-leave-active');
+                appContent.classList.remove('page-leave-to');
+                appContent.classList.add('page-enter-from');
+                appContent.classList.remove('page-enter-from');
+                
+                // Post-render logic for specific pages
+                if (page === 'tasks') {
+                    renderTasks('startio-tasks', 200, 'startio');
+                    renderTasks('admob-tasks', 80, 'admob');
+                    // Initialize cooldowns if needed
+                    initCooldown('startio', 60); // 1 minute cooldown for demo
+                    initCooldown('admob', 60); // 1 minute cooldown for demo
+                } else if (page === 'spin') {
+                    setupSpinCountdown();
+                } else if (page === 'wallet') {
+                    // Reset withdrawal form
+                    document.getElementById('withdrawal-input-area').classList.add('hidden');
+                } else if (page === 'home') {
+                    setupFridayCountdown();
+                }
+            }, 300); // Match transition duration
+        }
+
+        // --- Task Rendering Logic ---
+        function renderTasks(containerId, totalTasks, type) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            container.innerHTML = ''; // Clear previous tasks
+
+            for (let i = 1; i <= totalTasks; i++) {
+                const taskDiv = document.createElement('div');
+                taskDiv.className = `glass flex items-center justify-center h-16 rounded-lg task-item ${i > 40 && type === 'admob' ? 'locked' : ''} ${i > 50 && type === 'startio' ? 'locked' : ''}`; // Example locking
+                taskDiv.innerHTML = `
+                    <button class="w-full h-full flex flex-col items-center justify-center text-sm font-medium" onclick="completeTask(${i}, '${type}', this)">
+                        <span>Task ${i}</span>
+                        <span class="text-yellow-400 text-xs mt-1">+4 Tokens</span>
+                    </button>
+                `;
+                container.appendChild(taskDiv);
+            }
+        }
+
+        // --- Task Completion & Cooldown Logic (Frontend Mockup) ---
+        let startioCompleted = 0;
+        let admobCompleted = 0;
+        const taskTokens = 4;
+        let startioCooldownActive = false;
+        let admobCooldownActive = false;
+
+        function completeTask(taskId, type, buttonElement) {
+            if (buttonElement.parentElement.classList.contains('locked')) {
+                alert('This task is currently locked. Complete previous tasks or wait for cooldown!');
+                return;
+            }
+            if (type === 'startio' && startioCooldownActive) {
+                alert('Start.io Cooldown active! Please wait.');
+                return;
+            }
+            if (type === 'admob' && admobCooldownActive) {
+                alert('AdMob Cooldown active! Please wait.');
+                return;
+            }
+
+            // Simulate task completion
+            currentBalance += taskTokens;
+            updateBalanceDisplay();
+            buttonElement.parentElement.style.background = 'rgba(0, 128, 0, 0.3)'; // Green for completed
+            buttonElement.disabled = true;
+            buttonElement.innerHTML = `<i class="fas fa-check-circle text-green-400 text-2xl"></i>`;
+
+            if (type === 'startio') {
+                startioCompleted++;
+                if (startioCompleted % 40 === 0 && startioCompleted < 200) { // Apply cooldown after every 40 tasks
+                    startioCooldownActive = true;
+                    initCooldown('startio', 60); // 1 minute cooldown
+                    lockNext40Tasks(type, startioCompleted);
+                }
+            } else if (type === 'admob') {
+                admobCompleted++;
+                if (admobCompleted % 40 === 0 && admobCompleted < 80) { // Apply cooldown after every 40 ads
+                    admobCooldownActive = true;
+                    initCooldown('admob', 60); // 1 minute cooldown
+                    lockNext40Tasks(type, admobCompleted);
+                }
+            }
+        }
+
+        function lockNext40Tasks(type, completedCount) {
+            const containerId = type === 'startio' ? 'startio-tasks' : 'admob-tasks';
+            const container = document.getElementById(containerId);
+            const tasks = container.querySelectorAll('.task-item');
+            
+            // Lock tasks from completedCount + 1 to completedCount + 40
+            for (let i = completedCount; i < completedCount + 40 && i < tasks.length; i++) {
+                tasks[i].classList.add('locked');
+            }
+        }
+
+        function unlockTasks(type, completedCount) {
+            const containerId = type === 'startio' ? 'startio-tasks' : 'admob-tasks';
+            const container = document.getElementById(containerId);
+            const tasks = container.querySelectorAll('.task-item');
+            
+            // Unlock tasks from completedCount + 1 to completedCount + 40
+            for (let i = completedCount; i < completedCount + 40 && i < tasks.length; i++) {
+                tasks[i].classList.remove('locked');
+                // Make sure the button inside is enabled again if it wasn't completed
+                const button = tasks[i].querySelector('button');
+                if (button && button.disabled) {
+                    button.disabled = false;
+                    button.innerHTML = `<span>Task ${i+1}</span><span class="text-yellow-400 text-xs mt-1">+4 Tokens</span>`;
+                    tasks[i].style.background = ''; // Reset background
+                }
+            }
+        }
+
+
+        function initCooldown(type, duration) {
+            const cooldownButton = document.getElementById(`${type}-cooldown-button`);
+            const cooldownTimerDisplay = document.getElementById(`${type}-cooldown-timer`);
+            if (!cooldownButton || !cooldownTimerDisplay) return;
+
+            cooldownButton.classList.remove('hidden');
+            let timer = duration;
+            cooldownTimerDisplay.textContent = `${timer}s`;
+
+            const interval = setInterval(() => {
+                timer--;
+                cooldownTimerDisplay.textContent = `${timer}s`;
+                if (timer <= 0) {
+                    clearInterval(interval);
+                    cooldownButton.classList.add('hidden');
+                    if (type === 'startio') {
+                        startioCooldownActive = false;
+                        unlockTasks(type, startioCompleted);
+                    } else if (type === 'admob') {
+                        admobCooldownActive = false;
+                        unlockTasks(type, admobCompleted);
+                    }
+                    alert(`${type} cooldown finished! You can now do more tasks.`);
+                }
+            }, 1000);
+        }
+
+        // --- Spin Page Countdown ---
+        function setupSpinCountdown() {
+            const spinCountdownDisplay = document.getElementById('spin-countdown-display');
+            const spinButton = document.getElementById('spin-button');
+            if (!spinCountdownDisplay || !spinButton) return;
+
+            const now = new Date();
+            const friday10pm = new Date(now);
+            friday10pm.setDate(now.getDate() + (5 + 7 - now.getDay()) % 7); // Set to next Friday
+            friday10pm.setHours(22, 0, 0, 0); // 10 PM
+
+            if (now > friday10pm) { // If Friday 10 PM has passed, set for next week
+                friday10pm.setDate(friday10pm.getDate() + 7);
+            }
+
+            function updateCountdown() {
+                const currentTime = new Date().getTime();
+                const distance = friday10pm.getTime() - currentTime;
+
+                if (distance < 0) {
+                    spinCountdownDisplay.textContent = "Event is LIVE now! Spin & Win!";
+                    spinButton.disabled = false;<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamerCash BD | Professional Global Earning Master</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            background: radial-gradient(circle at top left, #0f172a, #1e293b, #000);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+        }
+        .neon-text {
+            text-shadow: 0 0 10px #3b82f6, 0 0 20px #3b82f6;
+        }
+        .nav-button {
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+        }
+        .nav-active {
+            color: #3b82f6;
+            transform: translateY(-5px);
+            text-shadow: 0 0 5px #3b82f6;
+        }
+        /* Page Transition Animations */
+        .page-enter-active, .page-leave-active {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .page-enter-from, .page-leave-to {
+            opacity: 0;
+        }
+        .page-leave-active {
+            position: absolute;
+            width: 100%;
+        }
+        .task-item.locked {
+            filter: grayscale(80%);
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body class="pb-24">
+
+    <header class="p-5 flex justify-between items-center z-10">
+        <div>
+            <h1 class="text-3xl font-extrabold neon-text">GamerCash BD</h1>
+            <p class="text-xs text-gray-400">ID: gamer-cash-bd-4bc97</p>
+        </div>
+        <div class="glass px-4 py-2 flex items-center gap-2 text-lg">
+            <i class="fas fa-coins text-yellow-400"></i>
+            <span id="current-balance" class="font-bold">1,250</span>
+        </div>
+    </header>
+
+    <main id="app-content" class="flex-grow p-5 space-y-6 relative overflow-hidden">
+        </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 glass m-4 p-3 flex justify-around items-center border-t-0 z-20">
+        <button id="nav-home" onclick="navigateTo('home')" class="nav-button flex flex-col items-center text-gray-400 nav-active">
+            <i class="fas fa-home text-xl"></i>
+            <span class="text-[10px] mt-1">Home</span>
+        </button>
+        <button id="nav-tasks" onclick="navigateTo('tasks')" class="nav-button flex flex-col items-center text-gray-400">
+            <i class="fas fa-tasks text-xl"></i>
+            <span class="text-[10px] mt-1">Tasks</span>
+        </button>
+        <button id="nav-leaderboard" onclick="navigateTo('leaderboard')" class="nav-button flex flex-col items-center text-gray-400">
+            <i class="fas fa-trophy text-xl"></i>
+            <span class="text-[10px] mt-1">Leaderboard</span>
+        </button>
+        <button id="nav-wallet" onclick="navigateTo('wallet')" class="nav-button flex flex-col items-center text-gray-400">
+            <i class="fas fa-wallet text-xl"></i>
+            <span class="text-[10px] mt-1">Wallet</span>
+        </button>
+        <button id="nav-profile" onclick="navigateTo('profile')" class="nav-button flex flex-col items-center text-gray-400">
+            <i class="fas fa-user text-xl"></i>
+            <span class="text-[10px] mt-1">Profile</span>
+        </button>
+    </nav>
+
+    <script>
+        const appContent = document.getElementById('app-content');
+        const navButtons = document.querySelectorAll('.nav-button');
+        let currentBalance = 1250; // Initial dummy balance
+
+        // Function to update balance display
+        function updateBalanceDisplay() {
+            document.getElementById('current-balance').textContent = currentBalance.toLocaleString();
+        }
+
+        // --- Page Content Definitions ---
+        const pages = {
+            home: `
+                <section class="glass p-5 grid grid-cols-2 gap-4 text-center">
+                    <div>
+                        <p class="text-gray-400 text-sm">Daily Tasks Completed</p>
+                        <p class="text-2xl font-bold neon-text">45/200</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Total Referrals</p>
+                        <p class="text-2xl font-bold neon-text">12</p>
+                    </div>
+                </section>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button onclick="navigateTo('tasks', 'startio')" class="glass p-6 flex flex-col items-center justify-center hover:scale-105 transition duration-300">
+                        <i class="fas fa-ad text-4xl text-blue-400 mb-3"></i>
+                        <span class="text-lg font-semibold">Start.io Tasks</span>
+                        <span class="text-sm text-gray-400">(200 daily)</span>
+                    </button>
+                    <button onclick="navigateTo('tasks', 'admob')" class="glass p-6 flex flex-col items-center justify-center hover:scale-105 transition duration-300">
+                        <i class="fas fa-mobile-alt text-4xl text-green-400 mb-3"></i>
+                        <span class="text-lg font-semibold">AdMob Tasks</span>
+                        <span class="text-sm text-gray-400">(80 daily)</span>
+                    </button>
+                    <button onclick="navigateTo('spin')" class="glass p-6 flex flex-col items-center justify-center hover:scale-105 transition duration-300 col-span-2">
+                        <i class="fas fa-spinner text-4xl text-purple-400 mb-3 animate-spin-slow"></i>
+                        <span class="text-lg font-semibold">Friday Night Mega Event!</span>
+                        <span id="countdown-timer" class="text-sm text-gray-400 mt-1"></span>
+                    </button>
+                </div>
+                
+                <section class="glass p-5 flex justify-between items-center bg-gradient-to-r from-blue-900/20 to-transparent">
+                    <div>
+                        <h3 class="font-bold text-lg">Ready to Cashout?</h3>
+                        <p class="text-xs text-gray-400">Minimum 500 Tokens needed</p>
+                    </div>
+                    <button onclick="navigateTo('wallet')" class="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg font-bold transition">Withdraw Now</button>
+                </section>
+            `,
+            tasks: `
+                <div class="glass p-6 space-y-5">
+                    <h2 class="text-2xl font-bold neon-text mb-4">Daily Earning Tasks</h2>
+                    
+                    <div class="space-y-3">
+                        <h3 class="text-xl font-semibold text-blue-300 flex items-center gap-2">
+                            <i class="fas fa-ad"></i> Start.io Tasks <span class="text-sm text-gray-400">(200 Tasks, 4 Tokens each)</span>
+                        </h3>
+                        <div id="startio-tasks" class="grid grid-cols-4 gap-2">
+                            </div>
+                        <button id="startio-cooldown-button" class="w-full bg-gray-700 text-gray-400 py-3 rounded-lg font-semibold mt-4 hidden" disabled>
+                            Cooldown: <span id="startio-cooldown-timer">60s</span>
+                        </button>
+                    </div>
+
+                    <hr class="border-gray-700">
+
+                    <div class="space-y-3">
+                        <h3 class="text-xl font-semibold text-green-300 flex items-center gap-2">
+                            <i class="fas fa-mobile-alt"></i> Google AdMob Tasks <span class="text-sm text-gray-400">(80 Tasks, 4 Tokens each)</span>
+                        </h3>
+                        <div id="admob-tasks" class="grid grid-cols-4 gap-2">
+                            </div>
+                        <button id="admob-cooldown-button" class="w-full bg-gray-700 text-gray-400 py-3 rounded-lg font-semibold mt-4 hidden" disabled>
+                            Cooldown: <span id="admob-cooldown-timer">60s</span>
+                        </button>
+                    </div>
+                </div>
+            `,
+            spin: `
+                <div class="glass p-6 text-center space-y-5">
+                    <h2 class="text-3xl font-bold neon-text">Friday Night Mega Spin!</h2>
+                    <p class="text-md text-gray-300">Test your luck for a chance to win big tokens!</p>
+                    <div class="relative w-64 h-64 mx-auto my-8">
+                        <img src="https://via.placeholder.com/256/0f172a/3b82f6?text=SPIN+WHEEL" alt="Spin Wheel" class="w-full h-full rounded-full border-4 border-blue-500 shadow-lg animate-pulse-slow">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-star text-white text-5xl opacity-80"></i>
+                        </div>
+                    </div>
+                    <p id="spin-countdown-display" class="text-xl font-semibold text-yellow-400"></p>
+                    <button id="spin-button" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg transition duration-300 transform hover:scale-105" disabled>
+                        Spin Now!
+                    </button>
+                    <p class="text-sm text-gray-400 mt-4">Event starts every Friday at 10 PM. Check back soon!</p>
+                </div>
+            `,
+            wallet: `
+                <div class="glass p-6 space-y-6">
+                    <h2 class="text-2xl font-bold neon-text">Withdraw Your Earnings</h2>
+                    <p class="text-gray-400 text-sm">Minimum withdrawal: 500 Tokens</p>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <label class="glass p-4 flex flex-col items-center cursor-pointer transition-all duration-200 hover:border-blue-500">
+                            <input type="radio" name="withdrawal-method" value="bkash" class="hidden" onchange="updateWithdrawalInput('bkash')">
+                            <img src="https://cdn.example.com/bkash_icon.png" alt="bKash" class="w-10 h-10 mb-2">
+                            <span>bKash</span>
+                        </label>
+                        <label class="glass p-4 flex flex-col items-center cursor-pointer transition-all duration-200 hover:border-blue-500">
+                            <input type="radio" name="withdrawal-method" value="nagad" class="hidden" onchange="updateWithdrawalInput('nagad')">
+                            <img src="https://cdn.example.com/nagad_icon.png" alt="Nagad" class="w-10 h-10 mb-2">
+                            <span>Nagad</span>
+                        </label>
+                        <label class="glass p-4 flex flex-col items-center cursor-pointer transition-all duration-200 hover:border-blue-500">
+                            <input type="radio" name="withdrawal-method" value="binance" class="hidden" onchange="updateWithdrawalInput('binance')">
+                            <img src="https://cdn.example.com/binance_icon.png" alt="Binance" class="w-10 h-10 mb-2">
+                            <span>Binance (USDT)</span>
+                        </label>
+                        <label class="glass p-4 flex flex-col items-center cursor-pointer transition-all duration-200 hover:border-blue-500">
+                            <input type="radio" name="withdrawal-method" value="freefire" class="hidden" onchange="updateWithdrawalInput('freefire')">
+                            <img src="https://cdn.example.com/freefire_icon.png" alt="Free Fire" class="w-10 h-10 mb-2">
+                            <span>Free Fire UID</span>
+                        </label>
+                        <label class="glass p-4 flex flex-col items-center cursor-pointer transition-all duration-200 hover:border-blue-500">
+                            <input type="radio" name="withdrawal-method" value="recharge" class="hidden" onchange="updateWithdrawalInput('recharge')">
+                            <i class="fas fa-mobile-alt text-4xl text-blue-400 mb-2"></i>
+                            <span>Mobile Recharge</span>
+                        </label>
+                    </div>
+
+                    <div id="withdrawal-input-area" class="space-y-4 hidden">
+                        <input type="number" id="withdrawal-amount" placeholder="Enter Tokens to Withdraw (Min 500)" class="w-full bg-black/40 border border-gray-700 p-3 rounded-lg outline-none focus:border-blue-500">
+                        <input type="text" id="account-info" placeholder="" class="w-full bg-black/40 border border-gray-700 p-3 rounded-lg outline-none focus:border-blue-500">
+                        <button onclick="submitWithdrawal()" class="w-full bg-blue-600 hover:bg-blue-700 p-3 rounded-lg font-bold transition">Submit Withdrawal Request</button>
+                    </div>
+
+                    <hr class="border-gray-700">
+
+                    <h3 class="text-xl font-bold neon-text">Transaction History</h3>
+                    <div id="transaction-history" class="space-y-3 text-sm">
+                        <div class="glass p-3 flex justify-between items-center">
+                            <span>bKash (017xxxxxx) - 500 Tokens</span>
+                            <span class="text-yellow-400">Pending</span>
+                        </div>
+                        <div class="glass p-3 flex justify-between items-center">
+                            <span>Free Fire (123456789) - 1000 Tokens</span>
+                            <span class="text-green-400">Confirmed</span>
+                        </div>
+                        <p class="text-gray-500 text-center">No more history available.</p>
+                    </div>
+                </div>
+            `,
+            profile: `
+                <div class="glass p-6 space-y-6">
+                    <h2 class="text-2xl font-bold neon-text">My Profile</h2>
+                    <div class="flex items-center space-x-4">
+                        <img src="https://via.placeholder.com/80/3b82f6/FFFFFF?text=P" alt="Profile Picture" class="w-20 h-20 rounded-full border-2 border-blue-500">
+                        <div>
+                            <p class="text-xl font-semibold">User Name</p>
+                            <p class="text-gray-400 text-sm">user@example.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <p class="flex justify-between items-center">
+                            <span class="text-gray-400">Total Earned:</span>
+                            <span class="font-semibold text-yellow-300">2,500 Tokens</span>
+                        </p>
+                        <p class="flex justify-between items-center">
+                            <span class="text-gray-400">Account Created:</span>
+                            <span class="font-semibold">Jan 1, 2023</span>
+                        </p>
+                        <button onclick="navigateTo('referral')" class="w-full bg-green-600 hover:bg-green-700 p-3 rounded-lg font-bold mt-4 transition">
+                            <i class="fas fa-share-alt mr-2"></i> Invite Friends
+                        </button>
+                    </div>
+
+                    <hr class="border-gray-700">
+
+                    <button class="w-full bg-red-600 hover:bg-red-700 p-3 rounded-lg font-bold transition">Logout</button>
+                </div>
+            `,
+            leaderboard: `
+                <div class="glass p-6 space-y-5">
+                    <h2 class="text-2xl font-bold neon-text text-center">Top Earners Leaderboard</h2>
+                    <p class="text-gray-400 text-center text-sm">See who's dominating the ranks!</p>
+
+                    <div class="bg-blue-900/20 rounded-lg p-3 flex items-center mb-4">
+                        <span class="text-yellow-400 font-bold text-lg mr-3">#1</span>
+                        <img src="https://via.placeholder.com/40/3b82f6/FFFFFF?text=U1" alt="User 1" class="w-10 h-10 rounded-full mr-3">
+                        <div class="flex-grow">
+                            <p class="font-semibold">ProGamerX</p>
+                            <p class="text-gray-400 text-xs">Total: 15,300 Tokens</p>
+                        </div>
+                        <i class="fas fa-trophy text-yellow-500 text-2xl"></i>
+                    </div>
+
+                    <div class="bg-gray-800/20 rounded-lg p-3 flex items-center">
+                        <span class="text-gray-300 font-bold text-lg mr-3">#2</span>
+                        <img src="https://via.placeholder.com/40/808080/FFFFFF?text=U2" alt="User 2" class="w-10 h-10 rounded-full mr-3">
+                        <div class="flex-grow">
+                            <p class="font-semibold">TokenMaster</p>
+                            <p class="text-gray-400 text-xs">Total: 12,870 Tokens</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800/20 rounded-lg p-3 flex items-center">
+                        <span class="text-gray-400 font-bold text-lg mr-3">#3</span>
+                        <img src="https://via.placeholder.com/40/666666/FFFFFF?text=U3" alt="User 3" class="w-10 h-10 rounded-full mr-3">
+                        <div class="flex-grow">
+                            <p class="font-semibold">CashHunter</p>
+                            <p class="text-gray-400 text-xs">Total: 9,990 Tokens</p>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-500 text-center text-sm mt-5">Your Rank: #125 (3,400 Tokens)</p>
+                </div>
+            `,
+            referral: `
+                <div class="glass p-6 space-y-6">
+                    <h2 class="text-2xl font-bold neon-text">Invite Friends & Earn!</h2>
+                    <p class="text-gray-300 text-center">Share your unique link and earn bonus tokens for every friend who joins.</p>
+
+                    <div class="text-center bg-blue-900/20 p-4 rounded-lg">
+                        <p class="text-lg font-semibold mb-2">Your Referral Link:</p>
+                        <div class="flex items-center justify-between glass p-3 rounded-lg">
+                            <span id="referral-link" class="text-blue-300 break-all">https://gamercashbd.com/ref/YOUR_ID_123</span>
+                            <button onclick="copyReferralLink()" class="ml-3 p-2 bg-blue-600 rounded-md hover:bg-blue-700 transition">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-2">Earn 50 tokens for each referral!</p>
+                    </div>
+
+                    <hr class="border-gray-700">
+
+                    <h3 class="text-xl font-bold neon-text">Your Referred Users (<span id="referred-count">3</span>)</h3>
+                    <div id="referred-users-list" class="space-y-3 text-sm">
+                        <div class="glass p-3 flex justify-between items-center">
+                            <span>UserA*** (Joined: Today)</span>
+                            <span class="text-green-400">+50 Tokens</span>
+                        </div>
+                        <div class="glass p-3 flex justify-between items-center">
+                            <span>UserB*** (Joined: Yesterday)</span>
+                            <span class="text-green-400">+50 Tokens</span>
+                        </div>
+                        <div class="glass p-3 flex justify-between items-center">
+                            <span>UserC*** (Joined: 3 days ago)</span>
+                            <span class="text-green-400">+50 Tokens</span>
+                        </div>
+                    </div>
+                </div>
+            `
+        };
+
+        // --- Core Navigation Function ---
+        function navigateTo(page, subPage = null) {
+            // Remove active class from all nav buttons
+            navButtons.forEach(button => button.classList.remove('nav-active', 'text-white'));
+            navButtons.forEach(button => button.classList.add('text-gray-400'));
+
+            // Add active class to the current nav button
+            const activeNavButton = document.getElementById(`nav-${page}`);
+            if (activeNavButton) {
+                activeNavButton.classList.add('nav-active', 'text-white');
+                activeNavButton.classList.remove('text-gray-400');
+            }
+
+            // Animate page transition
+            appContent.classList.add('page-leave-active');
+            appContent.classList.add('page-leave-to');
+
+            setTimeout(() => {
+                appContent.innerHTML = pages[page];
+                appContent.classList.remove('page-leave-active');
+                appContent.classList.remove('page-leave-to');
+                appContent.classList.add('page-enter-from');
+                appContent.classList.remove('page-enter-from');
+                
+                // Post-render logic for specific pages
+                if (page === 'tasks') {
+                    renderTasks('startio-tasks', 200, 'startio');
+                    renderTasks('admob-tasks', 80, 'admob');
+                    // Initialize cooldowns if needed
+                    initCooldown('startio', 60); // 1 minute cooldown for demo
+                    initCooldown('admob', 60); // 1 minute cooldown for demo
+                } else if (page === 'spin') {
+                    setupSpinCountdown();
+                } else if (page === 'wallet') {
+                    // Reset withdrawal form
+                    document.getElementById('withdrawal-input-area').classList.add('hidden');
+                } else if (page === 'home') {
+                    setupFridayCountdown();
+                }
+            }, 300); // Match transition duration
+        }
+
+        // --- Task Rendering Logic ---
+        function renderTasks(containerId, totalTasks, type) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            container.innerHTML = ''; // Clear previous tasks
+
+            for (let i = 1; i <= totalTasks; i++) {
+                const taskDiv = document.createElement('div');
+                taskDiv.className = `glass flex items-center justify-center h-16 rounded-lg task-item ${i > 40 && type === 'admob' ? 'locked' : ''} ${i > 50 && type === 'startio' ? 'locked' : ''}`; // Example locking
+                taskDiv.innerHTML = `
+                    <button class="w-full h-full flex flex-col items-center justify-center text-sm font-medium" onclick="completeTask(${i}, '${type}', this)">
+                        <span>Task ${i}</span>
+                        <span class="text-yellow-400 text-xs mt-1">+4 Tokens</span>
+                    </button>
+                `;
+                container.appendChild(taskDiv);
+            }
+        }
+
+        // --- Task Completion & Cooldown Logic (Frontend Mockup) ---
+        let startioCompleted = 0;
+        let admobCompleted = 0;
+        const taskTokens = 4;
+        let startioCooldownActive = false;
+        let admobCooldownActive = false;
+
+        function completeTask(taskId, type, buttonElement) {
+            if (buttonElement.parentElement.classList.contains('locked')) {
+                alert('This task is currently locked. Complete previous tasks or wait for cooldown!');
+                return;
+            }
+            if (type === 'startio' && startioCooldownActive) {
+                alert('Start.io Cooldown active! Please wait.');
+                return;
+            }
+            if (type === 'admob' && admobCooldownActive) {
+                alert('AdMob Cooldown active! Please wait.');
+                return;
+            }
+
+            // Simulate task completion
+            currentBalance += taskTokens;
+            updateBalanceDisplay();
+            buttonElement.parentElement.style.background = 'rgba(0, 128, 0, 0.3)'; // Green for completed
+            buttonElement.disabled = true;
+            buttonElement.innerHTML = `<i class="fas fa-check-circle text-green-400 text-2xl"></i>`;
+
+            if (type === 'startio') {
+                startioCompleted++;
+                if (startioCompleted % 40 === 0 && startioCompleted < 200) { // Apply cooldown after every 40 tasks
+                    startioCooldownActive = true;
+                    initCooldown('startio', 60); // 1 minute cooldown
+                    lockNext40Tasks(type, startioCompleted);
+                }
+            } else if (type === 'admob') {
+                admobCompleted++;
+                if (admobCompleted % 40 === 0 && admobCompleted < 80) { // Apply cooldown after every 40 ads
+                    admobCooldownActive = true;
+                    initCooldown('admob', 60); // 1 minute cooldown
+                    lockNext40Tasks(type, admobCompleted);
+                }
+            }
+        }
+
+        function lockNext40Tasks(type, completedCount) {
+            const containerId = type === 'startio' ? 'startio-tasks' : 'admob-tasks';
+            const container = document.getElementById(containerId);
+            const tasks = container.querySelectorAll('.task-item');
+            
+            // Lock tasks from completedCount + 1 to completedCount + 40
+            for (let i = completedCount; i < completedCount + 40 && i < tasks.length; i++) {
+                tasks[i].classList.add('locked');
+            }
+        }
+
+        function unlockTasks(type, completedCount) {
+            const containerId = type === 'startio' ? 'startio-tasks' : 'admob-tasks';
+            const container = document.getElementById(containerId);
+            const tasks = container.querySelectorAll('.task-item');
+            
+            // Unlock tasks from completedCount + 1 to completedCount + 40
+            for (let i = completedCount; i < completedCount + 40 && i < tasks.length; i++) {
+                tasks[i].classList.remove('locked');
+                // Make sure the button inside is enabled again if it wasn't completed
+                const button = tasks[i].querySelector('button');
+                if (button && button.disabled) {
+                    button.disabled = false;
+                    button.innerHTML = `<span>Task ${i+1}</span><span class="text-yellow-400 text-xs mt-1">+4 Tokens</span>`;
+                    tasks[i].style.background = ''; // Reset background
+                }
+            }
+        }
+
+
+        function initCooldown(type, duration) {
+            const cooldownButton = document.getElementById(`${type}-cooldown-button`);
+            const cooldownTimerDisplay = document.getElementById(`${type}-cooldown-timer`);
+            if (!cooldownButton || !cooldownTimerDisplay) return;
+
+            cooldownButton.classList.remove('hidden');
+            let timer = duration;
+            cooldownTimerDisplay.textContent = `${timer}s`;
+
+            const interval = setInterval(() => {
+                timer--;
+                cooldownTimerDisplay.textContent = `${timer}s`;
+                if (timer <= 0) {
+                    clearInterval(interval);
+                    cooldownButton.classList.add('hidden');
+                    if (type === 'startio') {
+                        startioCooldownActive = false;
+                        unlockTasks(type, startioCompleted);
+                    } else if (type === 'admob') {
+                        admobCooldownActive = false;
+                        unlockTasks(type, admobCompleted);
+                    }
+                    alert(`${type} cooldown finished! You can now do more tasks.`);
+                }
+            }, 1000);
+        }
+
+        // --- xSpin Page Countdown ---
+        function setupSpinCountdown() {
+            const spinCountdownDisplay = document.getElementById('spin-countdown-display');
+            const spinButton = document.getElementById('spin-button');
+            if (!spinCountdownDisplay || !spinButton) return;
+
+            const now = new Date();
+            const friday10pm = new Date(now);
+            friday10pm.setDate(now.getDate() + (5 + 7 - now.getDay()) % 7); // Set to next Friday
+            friday10pm.setHours(22, 0, 0, 0); // 10 PM
+
+            if (now > friday10pm) { // If Friday 10 PM has passed, set for next week
+                friday10pm.setDate(friday10pm.getDate() + 7);
+            }
+
+            function updateCountdown() {
+                const currentTime = new Date().getTime();
+                const distance = friday10pm.getTime() - currentTime;
+
+                if (distance < 0) {
+                    spinCountdownDisplay.textContent = "Event is LIVE now! Spin & Win!";
+                    spinButton.disabled = false;
